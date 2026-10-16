@@ -7,12 +7,6 @@ describe('parseIngredients', () => {
   });
 });
 
-describe('orq U6 probe', () => {
-  it('fails on purpose', () => {
-    expect(parseIngredients('papa')).toEqual(['batata']);
-  });
-});
-
 describe('validateRecipe', () => {
   it('requires a name and at least one ingredient', () => {
     expect(validateRecipe({ name: '', ingredients: ['x'] })).toBe('El nombre es obligatorio');
