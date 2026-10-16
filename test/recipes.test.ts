@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { parseIngredients, validateRecipe } from '../src/recipes';
+import { parseIngredients, recipeCountLabel, validateRecipe } from '../src/recipes';
 
 describe('parseIngredients', () => {
   it('trims, lowercases and de-duplicates', () => {
@@ -20,5 +20,13 @@ describe('validateRecipe', () => {
     expect(validateRecipe({ name: `  ${name}a  `, ingredients: ['x'] })).toBe(
       'El nombre es demasiado largo',
     );
+  });
+});
+
+describe('recipeCountLabel', () => {
+  it('shows the empty state, singular and plural', () => {
+    expect(recipeCountLabel(0)).toBe('No hay recetas');
+    expect(recipeCountLabel(1)).toBe('1 receta');
+    expect(recipeCountLabel(3)).toBe('3 recetas');
   });
 });
