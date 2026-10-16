@@ -4,6 +4,7 @@ import {
   parseIngredients,
   parseRecipeRoute,
   recipeCountLabel,
+  toggleFavorite,
   validateRecipe,
 } from '../src/recipes';
 
@@ -59,5 +60,12 @@ describe('filterByIngredient', () => {
 
   it('returns everything for a blank query', () => {
     expect(filterByIngredient(recipes, '  ')).toEqual(recipes);
+  });
+});
+
+describe('toggleFavorite', () => {
+  it('adds a missing id and removes an existing one', () => {
+    expect(toggleFavorite([], 2)).toEqual([2]);
+    expect(toggleFavorite([1, 2, 3], 2)).toEqual([1, 3]);
   });
 });

@@ -50,3 +50,8 @@ export function filterByIngredient(recipes: Recipe[], query: string): Recipe[] {
   if (!q) return recipes;
   return recipes.filter((r) => r.ingredients.some((i) => i.toLowerCase().includes(q)));
 }
+
+/** Adds the id to the favorites list, or removes it if already there. */
+export function toggleFavorite(favorites: number[], id: number): number[] {
+  return favorites.includes(id) ? favorites.filter((f) => f !== id) : [...favorites, id];
+}

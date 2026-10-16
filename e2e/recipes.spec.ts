@@ -58,3 +58,18 @@ test('filters the list by ingredient', async ({ page }) => {
   await page.getByPlaceholder('Buscar por ingrediente').fill('');
   await expect(recipes).toHaveCount(total);
 });
+
+test('toggles a favorite and keeps it after reload', async ({ page }) => {
+  await page.goto('/');
+  const star = page.getByTestId('recipe').first().locator('button.fav');
+  await expect(star).toHaveAttribute('aria-pressed', 'false');
+
+  await star.click();
+  await expect(star).toHaveText('★');
+  await page.reload();
+  await expect(star).toHaveAttribute('aria-pressed', 'true');
+
+  await star.click();
+  await expect(star).toHaveText('☆');
+  await expect.poll(() => page.evaluate(() => localStorage.getItem('favorites'))).toBe('[]');
+});

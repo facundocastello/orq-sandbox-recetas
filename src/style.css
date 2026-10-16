@@ -25,3 +25,10 @@ li {
   box-sizing: border-box;
   margin-top: 1rem;
 }
+.fav {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: 0 0.3rem 0 0;
+}
