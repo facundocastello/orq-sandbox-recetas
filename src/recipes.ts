@@ -24,7 +24,7 @@ export function parseIngredients(raw: string): string[] {
 export function validateRecipe(input: Partial<NewRecipe>): string | null {
   if (typeof input.name !== 'string' || input.name.trim().length === 0)
     return 'El nombre es obligatorio';
-  if (input.name.length > 80) return 'El nombre es demasiado largo';
+  if (input.name.trim().length > 80) return 'El nombre es demasiado largo';
   if (!Array.isArray(input.ingredients) || input.ingredients.length === 0)
     return 'Falta al menos un ingrediente';
   if (!input.ingredients.every((i) => typeof i === 'string' && i.trim().length > 0))
