@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { parseIngredients, recipeCountLabel, validateRecipe } from '../src/recipes';
+import { parseIngredients, parseRecipeRoute, recipeCountLabel, validateRecipe } from '../src/recipes';
 
 describe('parseIngredients', () => {
   it('trims, lowercases and de-duplicates', () => {
@@ -28,5 +28,13 @@ describe('recipeCountLabel', () => {
     expect(recipeCountLabel(0)).toBe('No hay recetas');
     expect(recipeCountLabel(1)).toBe('1 receta');
     expect(recipeCountLabel(3)).toBe('3 recetas');
+  });
+});
+
+describe('parseRecipeRoute', () => {
+  it('extracts the id from #/receta/:id and ignores other hashes', () => {
+    expect(parseRecipeRoute('#/receta/2')).toBe(2);
+    expect(parseRecipeRoute('')).toBeNull();
+    expect(parseRecipeRoute('#/receta/abc')).toBeNull();
   });
 });
