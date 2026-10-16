@@ -31,3 +31,9 @@ export function validateRecipe(input: Partial<NewRecipe>): string | null {
     return 'Ingrediente inválido';
   return null;
 }
+
+/** Text shown above the list: "1 receta", "3 recetas", or the empty state. */
+export function recipeCountLabel(count: number): string {
+  if (count === 0) return 'No hay recetas';
+  return count === 1 ? '1 receta' : `${count} recetas`;
+}

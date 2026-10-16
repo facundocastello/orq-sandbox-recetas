@@ -1,11 +1,13 @@
 import './style.css';
-import { parseIngredients, type Recipe } from './recipes';
+import { parseIngredients, recipeCountLabel, type Recipe } from './recipes';
 
 const list = document.querySelector<HTMLUListElement>('#list')!;
+const count = document.querySelector<HTMLParagraphElement>('#count')!;
 const form = document.querySelector<HTMLFormElement>('#add-form')!;
 const errorBox = document.querySelector<HTMLParagraphElement>('#error')!;
 
 function render(recipes: Recipe[]): void {
+  count.textContent = recipeCountLabel(recipes.length);
   list.replaceChildren(
     ...recipes.map((r) => {
       const li = document.createElement('li');
