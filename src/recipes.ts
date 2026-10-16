@@ -37,3 +37,9 @@ export function recipeCountLabel(count: number): string {
   if (count === 0) return 'No hay recetas';
   return count === 1 ? '1 receta' : `${count} recetas`;
 }
+
+/** Returns the recipe id for a "#/receta/:id" hash, or null for any other hash. */
+export function parseRecipeRoute(hash: string): number | null {
+  const match = /^#\/receta\/(\d+)$/.exec(hash);
+  return match ? Number(match[1]) : null;
+}

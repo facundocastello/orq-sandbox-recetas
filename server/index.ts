@@ -20,6 +20,15 @@ app.get('/api/recipes', (_req, res) => {
   res.json(store.all());
 });
 
+app.get('/api/recipes/:id', (req, res) => {
+  const recipe = store.get(Number(req.params.id));
+  if (!recipe) {
+    res.status(404).json({ error: 'Receta no encontrada' });
+    return;
+  }
+  res.json(recipe);
+});
+
 app.post('/api/recipes', (req, res) => {
   const body = (req.body ?? {}) as Partial<NewRecipe>;
   const error = validateRecipe(body);

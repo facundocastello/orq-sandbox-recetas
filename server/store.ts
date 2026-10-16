@@ -17,6 +17,10 @@ export class RecipeStore {
     return JSON.parse(readFileSync(this.file, 'utf8')) as Recipe[];
   }
 
+  get(id: number): Recipe | undefined {
+    return this.all().find((r) => r.id === id);
+  }
+
   add(input: NewRecipe): Recipe {
     const recipes = this.all();
     const recipe: Recipe = { id: Math.max(0, ...recipes.map((r) => r.id)) + 1, ...input };
