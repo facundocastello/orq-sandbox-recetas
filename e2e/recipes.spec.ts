@@ -11,3 +11,8 @@ test('lists seeded recipes and adds a new one', async ({ page }) => {
   await expect(page.getByTestId('recipe')).toHaveCount(4);
   await expect(page.getByTestId('recipe').last()).toContainText('Flan');
 });
+
+test('has a pot emoji favicon', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('link[rel="icon"]')).toHaveAttribute('href', /🍲/);
+});
