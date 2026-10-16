@@ -1,0 +1,15 @@
+# Fake "production" for orquestador tests: one container with an SQLite DB.
+# Reach it with scripts/sandbox-prod (an ssh-like wrapper around `docker exec`).
+name: orq-sandbox-prod
+services:
+  prod:
+    build: .
+    container_name: orq-sandbox-prod
+    volumes:
+      - prod-data:/data
+    healthcheck:
+      test: ['CMD', 'test', '-f', '/data/.seeded']
+      interval: 1s
+      retries: 30
+volumes:
+  prod-data:

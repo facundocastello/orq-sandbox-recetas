@@ -1,0 +1,5 @@
+[
+  { "id": 1, "name": "Tortilla de papas", "ingredients": ["papa", "huevo", "cebolla", "aceite"] },
+  { "id": 2, "name": "Guiso de lentejas", "ingredients": ["lentejas", "zanahoria", "cebolla", "chorizo"] },
+  { "id": 3, "name": "Panqueques", "ingredients": ["harina", "huevo", "leche"] }
+]

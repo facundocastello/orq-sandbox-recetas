@@ -1,0 +1,21 @@
+body {
+  font-family: system-ui, sans-serif;
+  max-width: 40rem;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+form {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+input {
+  flex: 1 1 12rem;
+  padding: 0.4rem;
+}
+li {
+  padding: 0.3rem 0;
+}
+#error {
+  color: #b00020;
+}

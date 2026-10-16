@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# ssh-like access to the fake prod container, so prod-tier `!` commands can be tested safely.
+#
+#   scripts/sandbox-prod                                   # interactive shell
+#   scripts/sandbox-prod "sqlite3 /data/prod.db" < q.sql   # like `ssh host "cmd" < q.sql`
+#   scripts/sandbox-prod "sqlite3 /data/prod.db 'select count(*) from recipes'"   # quote like ssh
+#
+# Put it on PATH (or alias it) as `sandbox-prod` so commands read exactly like an ssh call.
+# Start the container first with `pnpm prod:up`.
+set -euo pipefail
+
+CONTAINER="${SANDBOX_PROD_CONTAINER:-orq-sandbox-prod}"
+
+if [[ "$(docker inspect -f '{{.State.Running}}' "$CONTAINER" 2>/dev/null || true)" != "true" ]]; then
+  echo "sandbox-prod: container '$CONTAINER' is not running (run: pnpm prod:up)" >&2
+  exit 255
+fi
+
+if [[ $# -eq 0 ]]; then
+  exec docker exec -it "$CONTAINER" sh -l
+fi
+
+# Like ssh: all arguments are joined into one remote shell command; stdin is forwarded.
+if [[ -t 0 ]]; then
+  exec docker exec -it "$CONTAINER" sh -c "$*"
+else
+  exec docker exec -i "$CONTAINER" sh -c "$*"
+fi

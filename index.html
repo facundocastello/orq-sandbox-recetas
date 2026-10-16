@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recetas</title>
+  </head>
+  <body>
+    <main>
+      <h1>Recetas</h1>
+      <form id="add-form">
+        <input id="name" name="name" placeholder="Nombre" required />
+        <input
+          id="ingredients"
+          name="ingredients"
+          placeholder="Ingredientes (separados por coma)"
+          required
+        />
+        <button type="submit">Agregar</button>
+      </form>
+      <p id="error" role="alert" hidden></p>
+      <ul id="list"></ul>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

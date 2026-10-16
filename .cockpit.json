@@ -1,0 +1,26 @@
+{
+  "name": "recetas",
+  "registry": ".work-on-track",
+  "worktree": {
+    "create": "scripts/wt/create.sh {name} {baseRef}",
+    "remove": "scripts/wt/remove.sh {worktree}"
+  },
+  "workflow": ".claude/commands/work-on.md",
+  "baseRef": "origin/main",
+  "lifecycle": ["planning", "in-progress", "verifying", "pr-open", "in-review", "merged", "done"],
+  "columns": ["planning", "in-progress", "verifying", "pr-open", "in-review", "merged"],
+  "agent": {
+    "launch": "claude",
+    "resume": "claude --resume {session}"
+  },
+  "server": {
+    "start": "API_PORT={port2} WEB_PORT={port} pnpm dev",
+    "healthUrl": "http://localhost:{port}",
+    "portRoles": ["web", "api"]
+  },
+  "terminal": {
+    "backend": "tmux",
+    "sessionName": "cockpit_{repo}_{branch}"
+  },
+  "prodHosts": ["sandbox-prod"]
+}
