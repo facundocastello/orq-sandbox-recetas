@@ -73,3 +73,20 @@ test('toggles a favorite and keeps it after reload', async ({ page }) => {
   await expect(star).toHaveText('☆');
   await expect.poll(() => page.evaluate(() => localStorage.getItem('favorites'))).toBe('[]');
 });
+
+test('follows the system theme and persists the toggle', async ({ page }) => {
+  await page.emulateMedia({ colorScheme: 'dark' });
+  await page.goto('/');
+  const bg = () => page.evaluate(() => getComputedStyle(document.body).backgroundColor);
+  expect(await bg()).toBe('rgb(18, 18, 18)');
+
+  const toggle = page.locator('#theme-toggle');
+  await expect(toggle).toHaveText('☀️');
+  await page.getByRole('button', { name: 'Modo claro' }).click();
+  expect(await bg()).toBe('rgb(255, 255, 255)');
+  await expect(toggle).toHaveText('🌙');
+
+  await page.reload();
+  await expect(page.getByRole('button', { name: 'Modo oscuro' })).toBeVisible();
+  expect(await bg()).toBe('rgb(255, 255, 255)');
+});

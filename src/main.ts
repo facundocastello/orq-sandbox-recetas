@@ -14,6 +14,28 @@ const form = document.querySelector<HTMLFormElement>('#add-form')!;
 const errorBox = document.querySelector<HTMLParagraphElement>('#error')!;
 const detail = document.querySelector<HTMLElement>('#detail')!;
 const search = document.querySelector<HTMLInputElement>('#search')!;
+const themeToggle = document.querySelector<HTMLButtonElement>('#theme-toggle')!;
+
+function currentTheme(): 'light' | 'dark' {
+  const stored = document.documentElement.dataset.theme;
+  if (stored === 'light' || stored === 'dark') return stored;
+  return matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+
+function applyTheme(theme: string | null): void {
+  if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme;
+  const dark = currentTheme() === 'dark';
+  themeToggle.textContent = dark ? '☀️' : '🌙';
+  themeToggle.setAttribute('aria-label', dark ? 'Modo claro' : 'Modo oscuro');
+}
+
+themeToggle.addEventListener('click', () => {
+  const next = currentTheme() === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('theme', next);
+  applyTheme(next);
+});
+
+applyTheme(localStorage.getItem('theme'));
 
 const FAVORITES_KEY = 'favorites';
 
