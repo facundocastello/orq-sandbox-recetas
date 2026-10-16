@@ -1,5 +1,12 @@
 import './style.css';
-import { filterByIngredient, parseIngredients, parseRecipeRoute, recipeCountLabel, type Recipe } from './recipes';
+import {
+  filterByIngredient,
+  parseIngredients,
+  parseRecipeRoute,
+  recipeCountLabel,
+  toggleFavorite,
+  type Recipe,
+} from './recipes';
 
 const list = document.querySelector<HTMLUListElement>('#list')!;
 const count = document.querySelector<HTMLParagraphElement>('#count')!;
@@ -7,6 +14,35 @@ const form = document.querySelector<HTMLFormElement>('#add-form')!;
 const errorBox = document.querySelector<HTMLParagraphElement>('#error')!;
 const detail = document.querySelector<HTMLElement>('#detail')!;
 const search = document.querySelector<HTMLInputElement>('#search')!;
+
+const FAVORITES_KEY = 'favorites';
+
+function loadFavorites(): number[] {
+  try {
+    const parsed: unknown = JSON.parse(localStorage.getItem(FAVORITES_KEY) ?? '[]');
+    return Array.isArray(parsed) ? parsed.filter((x): x is number => typeof x === 'number') : [];
+  } catch {
+    return [];
+  }
+}
+
+function favoriteButton(id: number): HTMLButtonElement {
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'fav';
+  const paint = (on: boolean) => {
+    btn.textContent = on ? '★' : '☆';
+    btn.setAttribute('aria-pressed', String(on));
+    btn.setAttribute('aria-label', on ? 'Quitar de favoritos' : 'Marcar favorito');
+  };
+  paint(loadFavorites().includes(id));
+  btn.addEventListener('click', () => {
+    const next = toggleFavorite(loadFavorites(), id);
+    localStorage.setItem(FAVORITES_KEY, JSON.stringify(next));
+    paint(next.includes(id));
+  });
+  return btn;
+}
 
 let all: Recipe[] = [];
 
@@ -21,7 +57,7 @@ function render(): void {
       name.textContent = r.name;
       const ingredients = document.createElement('span');
       ingredients.textContent = ` ${r.ingredients.join(', ')}`;
-      li.append(name, ingredients);
+      li.append(favoriteButton(r.id), name, ingredients);
       return li;
     }),
   );
