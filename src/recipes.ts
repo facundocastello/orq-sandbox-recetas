@@ -43,3 +43,10 @@ export function parseRecipeRoute(hash: string): number | null {
   const match = /^#\/receta\/(\d+)$/.exec(hash);
   return match ? Number(match[1]) : null;
 }
+
+/** Recipes with at least one ingredient containing `query` (case-insensitive). Empty query keeps all. */
+export function filterByIngredient(recipes: Recipe[], query: string): Recipe[] {
+  const q = query.trim().toLowerCase();
+  if (!q) return recipes;
+  return recipes.filter((r) => r.ingredients.some((i) => i.toLowerCase().includes(q)));
+}

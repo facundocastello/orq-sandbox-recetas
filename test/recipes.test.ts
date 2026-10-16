@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { parseIngredients, parseRecipeRoute, recipeCountLabel, validateRecipe } from '../src/recipes';
+import {
+  filterByIngredient,
+  parseIngredients,
+  parseRecipeRoute,
+  recipeCountLabel,
+  validateRecipe,
+} from '../src/recipes';
 
 describe('parseIngredients', () => {
   it('trims, lowercases and de-duplicates', () => {
@@ -36,5 +42,22 @@ describe('parseRecipeRoute', () => {
     expect(parseRecipeRoute('#/receta/2')).toBe(2);
     expect(parseRecipeRoute('')).toBeNull();
     expect(parseRecipeRoute('#/receta/abc')).toBeNull();
+  });
+});
+
+describe('filterByIngredient', () => {
+  const recipes = [
+    { id: 1, name: 'Tortilla', ingredients: ['papa', 'huevo'] },
+    { id: 2, name: 'Guiso', ingredients: ['lentejas', 'Cebolla'] },
+  ];
+
+  it('matches partially and case-insensitively', () => {
+    expect(filterByIngredient(recipes, 'HUE').map((r) => r.id)).toEqual([1]);
+    expect(filterByIngredient(recipes, 'ceb').map((r) => r.id)).toEqual([2]);
+    expect(filterByIngredient(recipes, 'pollo')).toEqual([]);
+  });
+
+  it('returns everything for a blank query', () => {
+    expect(filterByIngredient(recipes, '  ')).toEqual(recipes);
   });
 });

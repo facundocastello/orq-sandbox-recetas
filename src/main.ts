@@ -1,16 +1,19 @@
 import './style.css';
-import { parseIngredients, parseRecipeRoute, recipeCountLabel, type Recipe } from './recipes';
+import { filterByIngredient, parseIngredients, parseRecipeRoute, recipeCountLabel, type Recipe } from './recipes';
 
 const list = document.querySelector<HTMLUListElement>('#list')!;
 const count = document.querySelector<HTMLParagraphElement>('#count')!;
 const form = document.querySelector<HTMLFormElement>('#add-form')!;
 const errorBox = document.querySelector<HTMLParagraphElement>('#error')!;
 const detail = document.querySelector<HTMLElement>('#detail')!;
+const search = document.querySelector<HTMLInputElement>('#search')!;
 
-function render(recipes: Recipe[]): void {
-  count.textContent = recipeCountLabel(recipes.length);
+let all: Recipe[] = [];
+
+function render(): void {
+  count.textContent = recipeCountLabel(all.length);
   list.replaceChildren(
-    ...recipes.map((r) => {
+    ...filterByIngredient(all, search.value).map((r) => {
       const li = document.createElement('li');
       li.dataset.testid = 'recipe';
       const name = document.createElement('a');
@@ -26,8 +29,11 @@ function render(recipes: Recipe[]): void {
 
 async function load(): Promise<void> {
   const res = await fetch('/api/recipes');
-  render((await res.json()) as Recipe[]);
+  all = (await res.json()) as Recipe[];
+  render();
 }
+
+search.addEventListener('input', render);
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -86,6 +92,7 @@ function route(): void {
   form.hidden = inDetail;
   list.hidden = inDetail;
   count.hidden = inDetail;
+  search.hidden = inDetail;
   errorBox.hidden = true;
   void (inDetail ? showDetail(id) : load());
 }
