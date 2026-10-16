@@ -1,8 +1,30 @@
+:root {
+  color-scheme: light;
+  --bg: #ffffff;
+  --fg: #1a1a1a;
+  --error: #b00020;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --bg: #121212;
+    --fg: #e8e8e8;
+    --error: #ff6b81;
+  }
+}
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #121212;
+  --fg: #e8e8e8;
+  --error: #ff6b81;
+}
 body {
   font-family: system-ui, sans-serif;
   max-width: 40rem;
   margin: 2rem auto;
   padding: 0 1rem;
+  background: var(--bg);
+  color: var(--fg);
 }
 form {
   display: flex;
@@ -17,7 +39,10 @@ li {
   padding: 0.3rem 0;
 }
 #error {
-  color: #b00020;
+  color: var(--error);
+}
+#theme-toggle {
+  float: right;
 }
 #search {
   display: block;
