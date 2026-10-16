@@ -1,0 +1,223 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "curl -sS -m 3 -o /dev/null -X POST -H 'Content-Type: application/json' -H \"X-Orq-Session: $ORQ_SESSION\" -H \"X-Orq-Token: $ORQ_TOKEN\" -H \"X-Orq-Tmux: $TMUX\" -H \"X-Orq-Tmux-Pane: $TMUX_PANE\" --data-binary @- http://127.0.0.1:47800/hooks/event >/dev/null 2>&1; exit 0",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "http",
+            "url": "http://127.0.0.1:47800/hooks/event",
+            "timeout": 5,
+            "headers": {
+              "X-Orq-Session": "$ORQ_SESSION",
+              "X-Orq-Token": "$ORQ_TOKEN",
+              "X-Orq-Tmux": "$TMUX",
+              "X-Orq-Tmux-Pane": "$TMUX_PANE"
+            },
+            "allowedEnvVars": [
+              "ORQ_SESSION",
+              "ORQ_TOKEN",
+              "TMUX",
+              "TMUX_PANE"
+            ]
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "AskUserQuestion",
+        "hooks": [
+          {
+            "type": "http",
+            "url": "http://127.0.0.1:47800/hooks/event",
+            "timeout": 5,
+            "headers": {
+              "X-Orq-Session": "$ORQ_SESSION",
+              "X-Orq-Token": "$ORQ_TOKEN",
+              "X-Orq-Tmux": "$TMUX",
+              "X-Orq-Tmux-Pane": "$TMUX_PANE"
+            },
+            "allowedEnvVars": [
+              "ORQ_SESSION",
+              "ORQ_TOKEN",
+              "TMUX",
+              "TMUX_PANE"
+            ]
+          }
+        ]
+      }
+    ],
+    "PermissionRequest": [
+      {
+        "hooks": [
+          {
+            "type": "http",
+            "url": "http://127.0.0.1:47800/hooks/permission-request",
+            "timeout": 600,
+            "headers": {
+              "X-Orq-Session": "$ORQ_SESSION",
+              "X-Orq-Token": "$ORQ_TOKEN",
+              "X-Orq-Tmux": "$TMUX",
+              "X-Orq-Tmux-Pane": "$TMUX_PANE"
+            },
+            "allowedEnvVars": [
+              "ORQ_SESSION",
+              "ORQ_TOKEN",
+              "TMUX",
+              "TMUX_PANE"
+            ]
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "http",
+            "url": "http://127.0.0.1:47800/hooks/event",
+            "timeout": 5,
+            "headers": {
+              "X-Orq-Session": "$ORQ_SESSION",
+              "X-Orq-Token": "$ORQ_TOKEN",
+              "X-Orq-Tmux": "$TMUX",
+              "X-Orq-Tmux-Pane": "$TMUX_PANE"
+            },
+            "allowedEnvVars": [
+              "ORQ_SESSION",
+              "ORQ_TOKEN",
+              "TMUX",
+              "TMUX_PANE"
+            ]
+          }
+        ]
+      }
+    ],
+    "PostToolUseFailure": [
+      {
+        "hooks": [
+          {
+            "type": "http",
+            "url": "http://127.0.0.1:47800/hooks/event",
+            "timeout": 5,
+            "headers": {
+              "X-Orq-Session": "$ORQ_SESSION",
+              "X-Orq-Token": "$ORQ_TOKEN",
+              "X-Orq-Tmux": "$TMUX",
+              "X-Orq-Tmux-Pane": "$TMUX_PANE"
+            },
+            "allowedEnvVars": [
+              "ORQ_SESSION",
+              "ORQ_TOKEN",
+              "TMUX",
+              "TMUX_PANE"
+            ]
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "http",
+            "url": "http://127.0.0.1:47800/hooks/event",
+            "timeout": 5,
+            "headers": {
+              "X-Orq-Session": "$ORQ_SESSION",
+              "X-Orq-Token": "$ORQ_TOKEN",
+              "X-Orq-Tmux": "$TMUX",
+              "X-Orq-Tmux-Pane": "$TMUX_PANE"
+            },
+            "allowedEnvVars": [
+              "ORQ_SESSION",
+              "ORQ_TOKEN",
+              "TMUX",
+              "TMUX_PANE"
+            ]
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "http",
+            "url": "http://127.0.0.1:47800/hooks/event",
+            "timeout": 5,
+            "headers": {
+              "X-Orq-Session": "$ORQ_SESSION",
+              "X-Orq-Token": "$ORQ_TOKEN",
+              "X-Orq-Tmux": "$TMUX",
+              "X-Orq-Tmux-Pane": "$TMUX_PANE"
+            },
+            "allowedEnvVars": [
+              "ORQ_SESSION",
+              "ORQ_TOKEN",
+              "TMUX",
+              "TMUX_PANE"
+            ]
+          }
+        ]
+      }
+    ],
+    "StopFailure": [
+      {
+        "hooks": [
+          {
+            "type": "http",
+            "url": "http://127.0.0.1:47800/hooks/event",
+            "timeout": 5,
+            "headers": {
+              "X-Orq-Session": "$ORQ_SESSION",
+              "X-Orq-Token": "$ORQ_TOKEN",
+              "X-Orq-Tmux": "$TMUX",
+              "X-Orq-Tmux-Pane": "$TMUX_PANE"
+            },
+            "allowedEnvVars": [
+              "ORQ_SESSION",
+              "ORQ_TOKEN",
+              "TMUX",
+              "TMUX_PANE"
+            ]
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "http",
+            "url": "http://127.0.0.1:47800/hooks/event",
+            "timeout": 5,
+            "headers": {
+              "X-Orq-Session": "$ORQ_SESSION",
+              "X-Orq-Token": "$ORQ_TOKEN",
+              "X-Orq-Tmux": "$TMUX",
+              "X-Orq-Tmux-Pane": "$TMUX_PANE"
+            },
+            "allowedEnvVars": [
+              "ORQ_SESSION",
+              "ORQ_TOKEN",
+              "TMUX",
+              "TMUX_PANE"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
