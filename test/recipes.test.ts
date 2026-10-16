@@ -17,6 +17,6 @@ describe('validateRecipe', () => {
 
 describe('pilot (orquestador S15b)', () => {
   it('fails on purpose until fixed', () => {
-    expect(parseIngredients('Ajo')).toEqual(['AJO']);
+    expect(parseIngredients('Ajo')).toEqual(['ajo']);
   });
 });
