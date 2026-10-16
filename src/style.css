@@ -19,3 +19,9 @@ li {
 #error {
   color: #b00020;
 }
+#search {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 1rem;
+}

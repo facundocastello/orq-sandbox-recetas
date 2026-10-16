@@ -43,3 +43,14 @@ test('GET /api/recipes/:id returns 404 for an unknown recipe', async ({ request 
   expect((await request.get('/api/recipes/1')).status()).toBe(200);
   expect((await request.get('/api/recipes/999')).status()).toBe(404);
 });
+
+test('filters the list by ingredient', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.getByTestId('recipe')).toHaveCount(3);
+
+  await page.getByPlaceholder('Buscar por ingrediente').fill('HUE');
+  await expect(page.getByTestId('recipe')).toHaveCount(2);
+
+  await page.getByPlaceholder('Buscar por ingrediente').fill('');
+  await expect(page.getByTestId('recipe')).toHaveCount(3);
+});
