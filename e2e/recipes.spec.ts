@@ -46,11 +46,15 @@ test('GET /api/recipes/:id returns 404 for an unknown recipe', async ({ request 
 
 test('filters the list by ingredient', async ({ page }) => {
   await page.goto('/');
-  await expect(page.getByTestId('recipe')).toHaveCount(3);
+  const recipes = page.getByTestId('recipe');
+  // The other test adds recipes to the shared server, so don't assume the seed count.
+  await expect(recipes.first()).toBeVisible();
+  const total = await recipes.count();
 
-  await page.getByPlaceholder('Buscar por ingrediente').fill('HUE');
-  await expect(page.getByTestId('recipe')).toHaveCount(2);
+  await page.getByPlaceholder('Buscar por ingrediente').fill('LENTEJ');
+  await expect(recipes).toHaveCount(1);
+  await expect(recipes).toContainText('Guiso de lentejas');
 
   await page.getByPlaceholder('Buscar por ingrediente').fill('');
-  await expect(page.getByTestId('recipe')).toHaveCount(3);
+  await expect(recipes).toHaveCount(total);
 });
